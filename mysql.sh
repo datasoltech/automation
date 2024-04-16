@@ -1,5 +1,5 @@
 # Variables
-VM_NAME="my-sql"
+VM_NAME="my-sql-$(date +'%Y%m%d%H%M%S')"
 MACHINE_TYPE="e2-medium"
 REGION="asia-south1-b"
 IMAGE_FAMILY="debian-10"
