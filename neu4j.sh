@@ -1,4 +1,4 @@
-[200~#!/bin/bash
+#!/bin/bash
 
 # Variables
 # VM_NAME="my-neo4j-$(date +'%Y%m%d%H%M%S')"
