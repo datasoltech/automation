@@ -5,7 +5,6 @@ import subprocess
 AUTH_TOKEN = 'apptoken'
 
 # Path of the shell script to start MySQL
-START_MYSQL_SCRIPT_PATH = '/home/flask_app/mysql.sh'
 
 # Execute a shell script
 def execute_shell_script(script_path):
@@ -39,7 +38,7 @@ def connect_to_mysql(host, user, password, database=None):
             port='3306',   
             user=user,
             password=password,
-            database=database
+            database='mydatabase'
         )
         return conn
     except mysql.connector.Error as err:
@@ -81,20 +80,20 @@ def get_databases_and_tables(host, user, password):
 def insert_database(result,status=True, sql_instance_type='mysql', backup_dir=None, replication_id=-1):
     try:
         conn = mysql.connector.connect(
-            host='35.244.61.106',
+            host='130.211.206.15',
             port='3306',
             user='rooot',
             password='BinRoot@123',
-            database='my_database',
+            database='mydatabase',
         )
 
         cursor = conn.cursor()
 
         # Create the 'monitor' database if it doesn't exist
         # cursor.execute("CREATE DATABASE IF NOT EXISTS monitor1")
-        print("creating monitor1 database")
+        print("creating monitor1 database",result,flush=True)
         # Use the 'monitor' database
-        cursor.execute("USE my_database")
+        cursor.execute("USE mydatabase")
 
         # Create table if not exists with status and sql_instance_type columns
         # Create the 'sql_instances' table
