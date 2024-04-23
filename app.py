@@ -9,8 +9,8 @@ CORS(app)
 AUTH_TOKEN = 'apptoken'
 
 # Path of the shell script to start MySQL
-START_MYSQL_SCRIPT_PATH = '/home/flask_app/mysql.sh'
-START_PGSQL_SCRIPT_PATH = '/home/flask_app/postgres.sh'
+START_MYSQL_SCRIPT_PATH = '/home/flask-api/mysql.sh'
+START_PGSQL_SCRIPT_PATH = '/home/flask-api/postgres.sh'
 
 
 @app.route('/start_postgres', methods=['POST'])
@@ -21,10 +21,10 @@ def start_postgres():
         if auth_token != AUTH_TOKEN:
             return jsonify({'success': False, 'error': 'Unauthorized access'}), 401
         print('here', flush=True)
-        script_path = '/home/flask_app/postgres.sh'
-        result = execute_shell_script(START_MYSQL_SCRIPT_PATH)
-        insert_instance(
-        result)
+        script_path = '/home/flask-api/postgres.sh'
+        result = execute_shell_script(START_PGSQL_SCRIPT_PATH)
+        insert_result=insert_database(
+        result,sql_instance_type='pgsql')
         print('here   ', flush=True)
         if insert_result['success']:
             return jsonify(result), 200
@@ -36,9 +36,11 @@ def start_postgres():
 
 @app.route('/start_mysql', methods=['POST'])
 def start_mysql():
+    auth_token = request.headers.get('Authorization')
+    if auth_token != AUTH_TOKEN:
+            return jsonify({'success': False, 'error': 'Unauthorized access'}), 401
+    print('here', flush=True)
  
-    if 'Authorization' not in request.headers or request.headers['Authorization'] != f'Bearer {AUTH_TOKEN}':
-        return jsonify({'error': 'Unauthorized access'}), 401
     
     # Execute the MySQL start script and get the result
     result = execute_shell_script(START_MYSQL_SCRIPT_PATH)
@@ -53,9 +55,8 @@ def start_mysql():
         print('here', flush=True)
             # Your existing code to start MySQL and obtain the result object
         result = execute_shell_script(START_MYSQL_SCRIPT_PATH)
-        insert_instance(
-        result
-                )
+        insert_database(
+        result,sql_instance_type='mysql')
 
         return jsonify({'success': True, 'message': 'Result stored in the database'}), 200
     except Exception as e:
@@ -67,7 +68,7 @@ def get_mysql_instances():
     try:
         # Call the function to get all instances from the database
         instances = get_all_instances(
-            host='35.244.61.106',
+            host='130.211.206.15',
             user='rooot',
             password='BinRoot@123'
         )
