@@ -80,7 +80,7 @@ def get_databases_and_tables(host, user, password):
 def insert_database(result,status=True, sql_instance_type='mysql', backup_dir=None, replication_id=-1):
     try:
         conn = mysql.connector.connect(
-            host='130.211.206.15',
+            host='34.42.230.148',
             port='3306',
             user='rooot',
             password='BinRoot@123',
