@@ -10,16 +10,16 @@ CORS(app)
 AUTH_TOKEN = 'apptoken'
 
 # Path of the shell scripts
-START_MYSQL_SCRIPT_PATH = '/home/flask-api/mysql.sh'
-START_PGSQL_SCRIPT_PATH = '/home/flask-api/postgres.sh'
-START_CLOUDSQLM_SCRIPT_PATH = '/home/flask-api/cloudsql-MS.sh'
-START_CLOUDSQLP_SCRIPT_PATH = '/home/flask-api/cloudsql-p.sh'
-START_ALLOYDBOMINI_SCRIPT_PATH = '/home/flask-api/alloyomini.sh'
-DELETE_VM_SCRIPT_PATH = '/home/flask-api/delete.sh'
-
+START_MYSQL_SCRIPT_PATH = '/home/manumalikcsgrade/automation/mysql.sh'
+START_PGSQL_SCRIPT_PATH = '/home/manumalikcsgrade/automation/postgres.sh'
+START_CLOUDSQLM_SCRIPT_PATH = '/home/manumalikcsgrade/automation/cloudsql-MS.sh'
+START_CLOUDSQLP_SCRIPT_PATH = '/home/manumalikcsgrade/automation/cloudsql-p.sh'
+START_ALLOYDBOMINI_SCRIPT_PATH = '/home/manumalikcsgrade/automation/alloyomini.sh'
+DELETE_VM_SCRIPT_PATH = '/home/manumalikcsgrade/automation/deleteVM.sh'
+DELETE_CSI_SCRIPT_PATH = '/home/manumalikcsgrade/automation/deleteCSI.sh'
 
 MYSQL_CONFIG = {
-    'host': '34.42.230.148',
+    'host': '54.83.123.96',
     'user': 'rooot',
     'password': 'BinRoot@123',
     'database': 'mydatabase'
@@ -115,7 +115,7 @@ def start_mysql():
 def get_mysql_instances():
     try:
         instances = get_all_instances(
-            host='34.42.230.148',
+            host='54.83.123.96',
             user='rooot',
             password='BinRoot@123'
         )
@@ -133,6 +133,40 @@ def delete_vm():
 
         instance_name = request.json.get('instance_name')
         subprocess.run(['bash', DELETE_VM_SCRIPT_PATH, instance_name], check=True)
+
+        # Establish connection to MySQL database
+        connection = mysql.connector.connect(**MYSQL_CONFIG)
+        cursor = connection.cursor()
+
+        # Execute UPDATE query to set status to 0
+        update_query = "UPDATE sql_instances SET status = 0 WHERE instance_name = %s"
+        cursor.execute(update_query, (instance_name,))
+        connection.commit()
+
+        # Close cursor and connection
+        cursor.close()
+        connection.close()
+
+        response = {"message": f"VM instance {instance_name} successfully deleted."}
+        status_code = 200
+    except subprocess.CalledProcessError:
+        response = {"message": f"Failed to delete VM instance {instance_name}."}
+        status_code = 500
+    except Exception as e:
+        response = {"message": str(e)}
+        status_code = 500
+
+    return jsonify(response), status_code
+
+@app.route('/delete_CSI', methods=['POST'])
+def delete_CSI():
+    try:
+        auth_token = request.headers.get('Authorization')
+        if auth_token != AUTH_TOKEN:
+            return jsonify({'success': False, 'error': 'Unauthorized access'}), 401
+
+        instance_name = request.json.get('instance_name')
+        subprocess.run(['bash', DELETE_CSI_SCRIPT_PATH, instance_name], check=True)
 
         # Establish connection to MySQL database
         connection = mysql.connector.connect(**MYSQL_CONFIG)
