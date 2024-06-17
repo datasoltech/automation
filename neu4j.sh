@@ -26,3 +26,15 @@
 #                         --publish=7474:7474 --publish=7687:7687 \
 #                             --env NEO4J_AUTH=neo4j/BinRoot@123 \
 #                                 neo4j:5.19.0"
+
+# Get external IP address
+EXTERNAL_IP=$(gcloud compute instances describe $VM_NAME --zone=$ZONE --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+
+# Print instance name and external IP address
+echo "Instance_Name: $VM_NAME"
+echo "External_IP: $EXTERNAL_IP"
+
+# Print MySQL database configuration
+echo "NEU4J_DATABASE: "
+echo "NEU4J_USER: neu4j"
+echo "NEU4J_PASSWORD: BinRoot@123"
