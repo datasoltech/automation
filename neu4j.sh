@@ -19,7 +19,7 @@ sleep 20
 gcloud compute ssh $VM_NAME --zone=$REGION --command="sudo apt install -y docker.io" > /dev/null 2>&1
 
 # Run Docker container
-gcloud compute ssh $VM_NAME --zone=$REGION --command="docker run \
+gcloud compute ssh $VM_NAME --zone=$REGION --command="sudo docker run \
     --restart always \
     --publish=7474:7474 --publish=7687:7687 \
     --env NEO4J_AUTH=neo4j/BinRoot@123 \
