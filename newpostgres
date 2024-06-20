@@ -19,7 +19,7 @@ sleep 20
 gcloud compute ssh $VM_NAME --zone=$ZONE --command="sudo apt update && sudo apt install -y docker.io" > /dev/null 2>&1
 
 # Run Docker container
-gcloud compute ssh $VM_NAME --zone=$ZONE --command="docker run --name my-postgres -e POSTGRES_PASSWORD=BinRoot@123 -e POSTGRES_USER=rooot -e POSTGRES_DB=my_database -p 5432:5432 -d postgres" > /dev/null 2>&1
+gcloud compute ssh $VM_NAME --zone=$ZONE --command="sudo docker run --name my-postgres -e POSTGRES_PASSWORD=BinRoot@123 -e POSTGRES_USER=rooot -e POSTGRES_DB=my_database -p 5432:5432 -d postgres" > /dev/null 2>&1
 
 # Get external IP address
 EXTERNAL_IP=$(gcloud compute instances describe $VM_NAME --zone=$ZONE --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
