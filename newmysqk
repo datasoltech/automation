@@ -3,8 +3,8 @@
 # Variables
 VM_NAME="mysql-$(date +'%Y%m%d%H%M%S')"
 MACHINE_TYPE="e2-medium"
-ZONE="asia-south1-b"
-IMAGE_FAMILY="debian-10"
+ZONE="us-central1-a"
+IMAGE_FAMILY="debian-12"
 
 # Create VM instance
 gcloud compute instances create $VM_NAME \
@@ -19,7 +19,7 @@ sleep 20
 gcloud compute ssh $VM_NAME --zone=$ZONE --command="sudo apt update && sudo apt install -y docker.io" > /dev/null 2>&1
 
 # Run Docker container
-gcloud compute ssh $VM_NAME --zone=$ZONE --command="docker run --name mysql-container \
+gcloud compute ssh $VM_NAME --zone=$ZONE --command="sudo docker run --name mysql-container \
   -e MYSQL_ROOT_PASSWORD=BinRoot@123 \
   -e MYSQL_DATABASE=my_database \
   -e MYSQL_USER=rooot \
