@@ -19,7 +19,7 @@ sleep 20
 gcloud compute ssh $VM_NAME --zone=$REGION --command="sudo apt install -y docker.io" > /dev/null 2>&1
 
 # Run Docker container
-gcloud compute ssh $VM_NAME --zone=$REGION --command="docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=BinRoot@123 -e MYSQL_DATABASE=my_database -e MYSQL_USER=rooot -e MYSQL_PASSWORD=BinRoot@123 -p 3306:3306 -d mysql:latest" > /dev/null 2>&1
+gcloud compute ssh $VM_NAME --zone=$REGION --command="docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=BinRoot@123 -e MYSQL_DATABASE=my_database -e MYSQL_USER=rooot -e MYSQL_PASSWORD=BinRoot@123 -p 3306:3306 -d mysql:8.0" > /dev/null 2>&1
 
 # Get external IP address
 EXTERNAL_IP=$(gcloud compute instances describe $VM_NAME --zone=$ZONE --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
