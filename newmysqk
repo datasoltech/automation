@@ -3,7 +3,7 @@
 # Variables
 VM_NAME="mysql-$(date +'%Y%m%d%H%M%S')"
 MACHINE_TYPE="e2-medium"
-REGION="asia-south1-b"
+REGION="us-central1-c"
 IMAGE_FAMILY="debian-10"
 
 # Create VM instance
