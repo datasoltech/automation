@@ -18,8 +18,7 @@ nohup gcloud sql instances create $INSTANCE_NAME \
     --project=$PROJECT_ID \
     --region=$REGION \
     --database-version=$DATABASE_VERSION \
-    --tier=$DATABASE_TIER > /dev/null 2>&1 &
-=$DATABASE_TIER > /dev/null 2>&1  # Redirect output to /dev/null
+    --tier=$DATABASE_TIER > /dev/null 2>&1 &  # Redirect output to /dev/null
 
 # Set root password for Cloud SQL instance
 # You might need to have sufficient permissions to execute this command
