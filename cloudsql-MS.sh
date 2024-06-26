@@ -14,11 +14,12 @@ USER_PASSWORD="BinRoot@123"  # Change the password to your desired one
 INSTANCE_NAME=$(echo "$INSTANCE_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g')
 
 # Create Cloud SQL instance
-gcloud sql instances create $INSTANCE_NAME \
+nohup gcloud sql instances create $INSTANCE_NAME \
     --project=$PROJECT_ID \
     --region=$REGION \
     --database-version=$DATABASE_VERSION \
-    --tier=$DATABASE_TIER > /dev/null 2>&1  # Redirect output to /dev/null
+    --tier=$DATABASE_TIER > /dev/null 2>&1 &
+=$DATABASE_TIER > /dev/null 2>&1  # Redirect output to /dev/null
 
 # Set root password for Cloud SQL instance
 # You might need to have sufficient permissions to execute this command
@@ -26,7 +27,7 @@ gcloud sql users set-password root \
     --project=$PROJECT_ID \
     --instance=$INSTANCE_NAME \
     --password=BinRoot@123 > /dev/null 2>&1  # Redirect output to /dev/null
-
+sleep 20
 # Get public IP address of the MySQL instance
 PUBLIC_IP=$(gcloud sql instances describe $INSTANCE_NAME --project=$PROJECT_ID --format="value(ipAddresses.ipAddress)")
 
