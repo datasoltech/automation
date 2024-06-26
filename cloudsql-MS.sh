@@ -4,7 +4,7 @@
 PROJECT_ID="genaiexperiments-1"
 REGION="us-central1"
 INSTANCE_NAME="cloudsqlM-$(date +'%Y%m%d%H%M%S')"  # Updated instance name prefix
-DATABASE_VERSION="MYSQL_5_7"  # Changed to MySQL version
+DATABASE_VERSION="MYSQL_8_0"  # Changed to MySQL version
 DATABASE_TIER="db-f1-micro"  # Change the tier to a valid one
 USERNAME="root@%"  # Updated username for MySQL
 USER_PASSWORD="BinRoot@123"  # Change the password to your desired one
@@ -27,7 +27,7 @@ gcloud sql users set-password root \
     --project=$PROJECT_ID \
     --instance=$INSTANCE_NAME \
     --password=BinRoot@123 > /dev/null 2>&1  # Redirect output to /dev/null
-sleep 20
+sleep 50
 # Get public IP address of the MySQL instance
 PUBLIC_IP=$(gcloud sql instances describe $INSTANCE_NAME --project=$PROJECT_ID --format="value(ipAddresses.ipAddress)")
 
