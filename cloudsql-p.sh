@@ -11,7 +11,7 @@ USER_PASSWORD="BinRoot@123"  # Change the password to your desired one
 
 # Create Cloud SQL instance with a valid name
 # Convert uppercase to lowercase and replace non-alphanumeric characters with hyphens
-INSTANCE_NAME=$(echo "$INSTANCE_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g')
+#INSTANCE_NAME=$(echo "$INSTANCE_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g')
 
 # Create Cloud SQL instance
 nohup gcloud sql instances create $INSTANCE_NAME \
@@ -41,6 +41,6 @@ echo "Instance_Name: $INSTANCE_NAME "
 echo "External_IP: $PUBLIC_IP"
 
 # Print MySQL database configuration
-echo "MYSQL_DATABASE: "
-echo "MYSQL_USER: postgres"
-echo "MYSQL_PASSWORD: BinRoot@123"
+echo "POSTGRES_DATABASE: "
+echo "POSTGRES_USER: postgres"
+echo "POSTGRES_PASSWORD: BinRoot@123"
