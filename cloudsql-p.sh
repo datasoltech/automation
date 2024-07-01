@@ -3,7 +3,7 @@
 # Set variables
 PROJECT_ID="genaiexperiments-1"
 REGION="us-central1"
-INSTANCE_NAME="cloudsqlP-$(date +'%Y%m%d%H%M%S')"
+INSTANCE_NAME="cloudsqip-$(date +'%Y%m%d%H%M%S')"
 DATABASE_VERSION="POSTGRES_9_6"
 DATABASE_TIER="db-f1-micro"  # Change the tier to a valid one
 USERNAME="postgres"
