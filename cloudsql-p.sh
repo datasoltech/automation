@@ -30,7 +30,7 @@ gcloud sql users set-password root \
 sleep 50
 
 # Get public IP address of the PostgreSQL instance
-PUBLIC_IP=$(gcloud sql instances describe $INSTANCE_NAME --project=$PROJECT_ID --format="value(ipAddresses.ipAddress)")
+PUBLIC_IPOUTGOING_IP=$(gcloud sql instances describe $INSTANCE_NAME --project=$PROJECT_ID --format="value(ipAddresses.ipAddress)")
 
 # Print the public IP address
 
@@ -38,7 +38,7 @@ PUBLIC_IP=$(gcloud sql instances describe $INSTANCE_NAME --project=$PROJECT_ID -
 
 # Print instance name and external IP address
 echo "Instance_Name: $INSTANCE_NAME "
-echo "External_IP: $PUBLIC_IP"
+echo "PUBLIC_IP&OUTGOING_IP: $PUBLIC_IPOUTGOING_IP"
 
 # Print MySQL database configuration
 echo "POSTGRES_DATABASE: "
